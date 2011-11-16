@@ -60,6 +60,14 @@ public class GrowlApplicationBridge
         return _isGrowlRunning();
     }
 
+    /**
+     * @return Time elapsed since the last notification, in milliseconds
+     */
+    public long timeSinceLastNotification()
+    {
+        return System.currentTimeMillis() - _timeLastNotif;
+    }
+
     public void registerNotifications(NotificationType... types)
     {
         ArrayList<String> allNotifications = new ArrayList<String>();
@@ -91,7 +99,7 @@ public class GrowlApplicationBridge
         // So if we have more than 16 notifications pending and it has been 30 seconds since the last notification
         // we assume that all notifications are long gone and we clear _pendingCallbacks
         // Obviously, this might be bad if we used a lot of sticky notifications - which is not the case.
-        if (_pendingCallbacks.size() > 16 && System.currentTimeMillis() - _timeLastNotif > 30 * 1000) {
+        if (_pendingCallbacks.size() > 16 && timeSinceLastNotification() > 30 * 1000) {
             _pendingCallbacks.clear();
         }
 
