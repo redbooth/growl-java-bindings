@@ -1,0 +1,259 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		168517191472DE540037CB0F /* GrowlJavaDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 168517171472DE540037CB0F /* GrowlJavaDelegate.h */; };
+		1685171A1472DE540037CB0F /* GrowlJavaDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 168517181472DE540037CB0F /* GrowlJavaDelegate.m */; };
+		16C4407A14719150001F8832 /* GrowlJavaBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 16C4407814719150001F8832 /* GrowlJavaBridge.h */; };
+		16C4407B14719150001F8832 /* GrowlJavaBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C4407914719150001F8832 /* GrowlJavaBridge.m */; };
+		16C4408E1471CF00001F8832 /* JavaVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C4408D1471CF00001F8832 /* JavaVM.framework */; };
+		16C4409E1471E7E9001F8832 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C4409D1471E7E9001F8832 /* Cocoa.framework */; };
+		16C440A01471E82D001F8832 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C4409F1471E82D001F8832 /* Growl.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		16C440A11471EB24001F8832 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = ../bin;
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		168517171472DE540037CB0F /* GrowlJavaDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlJavaDelegate.h; sourceTree = "<group>"; };
+		168517181472DE540037CB0F /* GrowlJavaDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowlJavaDelegate.m; sourceTree = "<group>"; };
+		16C44071147190BA001F8832 /* libGrowlJavaBridge.jnilib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libGrowlJavaBridge.jnilib; sourceTree = BUILT_PRODUCTS_DIR; };
+		16C4407814719150001F8832 /* GrowlJavaBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlJavaBridge.h; sourceTree = "<group>"; };
+		16C4407914719150001F8832 /* GrowlJavaBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowlJavaBridge.m; sourceTree = "<group>"; };
+		16C4408D1471CF00001F8832 /* JavaVM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaVM.framework; path = System/Library/Frameworks/JavaVM.framework; sourceTree = SDKROOT; };
+		16C4409D1471E7E9001F8832 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		16C4409F1471E82D001F8832 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		16C4406E147190BA001F8832 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16C440A01471E82D001F8832 /* Growl.framework in Frameworks */,
+				16C4409E1471E7E9001F8832 /* Cocoa.framework in Frameworks */,
+				16C4408E1471CF00001F8832 /* JavaVM.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		16C44066147190BA001F8832 = {
+			isa = PBXGroup;
+			children = (
+				168517171472DE540037CB0F /* GrowlJavaDelegate.h */,
+				168517181472DE540037CB0F /* GrowlJavaDelegate.m */,
+				16C4407814719150001F8832 /* GrowlJavaBridge.h */,
+				16C4407914719150001F8832 /* GrowlJavaBridge.m */,
+				16C4407E14719194001F8832 /* Frameworks */,
+				16C44072147190BA001F8832 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		16C44072147190BA001F8832 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				16C44071147190BA001F8832 /* libGrowlJavaBridge.jnilib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		16C4407E14719194001F8832 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				16C4409F1471E82D001F8832 /* Growl.framework */,
+				16C4409D1471E7E9001F8832 /* Cocoa.framework */,
+				16C4408D1471CF00001F8832 /* JavaVM.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		16C4406F147190BA001F8832 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16C4407A14719150001F8832 /* GrowlJavaBridge.h in Headers */,
+				168517191472DE540037CB0F /* GrowlJavaDelegate.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		16C44070147190BA001F8832 /* GrowlJavaBridge */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 16C44075147190BA001F8832 /* Build configuration list for PBXNativeTarget "GrowlJavaBridge" */;
+			buildPhases = (
+				16C4406D147190BA001F8832 /* Sources */,
+				16C4406E147190BA001F8832 /* Frameworks */,
+				16C4406F147190BA001F8832 /* Headers */,
+				16C440A11471EB24001F8832 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GrowlJavaBridge;
+			productName = JavaGrowl;
+			productReference = 16C44071147190BA001F8832 /* libGrowlJavaBridge.jnilib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		16C44068147190BA001F8832 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 16C4406B147190BA001F8832 /* Build configuration list for PBXProject "GrowlJavaBridge" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 16C44066147190BA001F8832;
+			productRefGroup = 16C44072147190BA001F8832 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				16C44070147190BA001F8832 /* GrowlJavaBridge */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		16C4406D147190BA001F8832 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16C4407B14719150001F8832 /* GrowlJavaBridge.m in Sources */,
+				1685171A1472DE540037CB0F /* GrowlJavaDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		16C44073147190BA001F8832 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		16C44074147190BA001F8832 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		16C44076147190BA001F8832 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				EXECUTABLE_EXTENSION = jnilib;
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				INSTALL_PATH = "@rpath";
+				LD_DYLIB_INSTALL_NAME = "$(DYLIB_INSTALL_NAME_BASE:standardizepath)/$(EXECUTABLE_PATH)";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path";
+				PRODUCT_NAME = GrowlJavaBridge;
+				SKIP_INSTALL = NO;
+			};
+			name = Debug;
+		};
+		16C44077147190BA001F8832 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				EXECUTABLE_EXTENSION = jnilib;
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				INSTALL_PATH = "@rpath";
+				LD_DYLIB_INSTALL_NAME = "$(DYLIB_INSTALL_NAME_BASE:standardizepath)/$(EXECUTABLE_PATH)";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path";
+				PRODUCT_NAME = GrowlJavaBridge;
+				SKIP_INSTALL = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		16C4406B147190BA001F8832 /* Build configuration list for PBXProject "GrowlJavaBridge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16C44073147190BA001F8832 /* Debug */,
+				16C44074147190BA001F8832 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		16C44075147190BA001F8832 /* Build configuration list for PBXNativeTarget "GrowlJavaBridge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16C44076147190BA001F8832 /* Debug */,
+				16C44077147190BA001F8832 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 16C44068147190BA001F8832 /* Project object */;
+}
