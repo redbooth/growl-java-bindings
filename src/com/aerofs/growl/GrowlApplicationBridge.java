@@ -18,8 +18,6 @@ public class GrowlApplicationBridge
     // Callbacks (called by native code)
     void onNotificationClicked(int clickContext)
     {
-        System.out.println("Java: clicked " + clickContext);
-
         Notification n = _pendingCallbacks.remove(clickContext);
         if (n != null && n.getClickedCallback() != null) {
             n.getClickedCallback().run();
@@ -28,8 +26,6 @@ public class GrowlApplicationBridge
 
     void onNotificationDismissed(int clickContext)
     {
-        System.out.println("Java: dismissed " + clickContext);
-
         Notification n = _pendingCallbacks.remove(clickContext);
         if (n != null && n.getDismissedCallback() != null) {
             n.getDismissedCallback().run();
