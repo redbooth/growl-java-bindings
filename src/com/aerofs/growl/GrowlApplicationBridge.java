@@ -43,6 +43,7 @@ public class GrowlApplicationBridge
     String _appName;
     RenderedImage _defaultIcon;
     private HashMap<Integer, Notification> _pendingCallbacks = new HashMap<Integer, Notification>();
+    private long _timeLastNotif;
 
     public GrowlApplicationBridge(String appName)
     {
@@ -83,15 +84,21 @@ public class GrowlApplicationBridge
         if (n.getClickedCallback() != null || n.getDismissedCallback() != null) {
             clickContext = n.hashCode();
             _pendingCallbacks.put(clickContext, n);
+        }
 
-            // Make sure that we are not leaking Notifications
-            // TODO: Do something to clean up the hashmap
-            assert (_pendingCallbacks.size() < 16);
+        // Due to bugs in Growl 1.3, it is possible that we miss one or more onDisposed or onClicked calls
+        // Because of that, we could leak memory because notifications in _pendingCallbacks would never get deleted
+        // So if we have more than 16 notifications pending and it has been 30 seconds since the last notification
+        // we assume that all notifications are long gone and we clear _pendingCallbacks
+        // Obviously, this might be bad if we used a lot of sticky notifications - which is not the case.
+        if (_pendingCallbacks.size() > 16 && System.currentTimeMillis() - _timeLastNotif > 30 * 1000) {
+            _pendingCallbacks.clear();
         }
 
         NotificationType type = n.getType();
         RenderedImage icon = (n.getIcon() != null) ? n.getIcon() : type.getDefaultIcon();
         _notify(n.getTitle(), n.getMessage(), type.getName(), serializeImage(icon), n.getPriority().getValue(), n.isSticky(), clickContext, n.getGroup());
+        _timeLastNotif = System.currentTimeMillis();
     }
 
     public void release()
