@@ -1,7 +1,5 @@
 package com.aerofs.growl;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 import java.awt.image.RenderedImage;
 
 public class NotificationType
@@ -12,7 +10,7 @@ public class NotificationType
 
     /**
      * Create a new type of notification
-     * @param name must be a human-readable name. it will be displayed in the Growl preferences
+     * @param name must be a human-readable name. It will be displayed in the Growl preferences
      * Example: new NotificationType("New track playing")
      */
     public NotificationType(String name)

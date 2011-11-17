@@ -1,7 +1,6 @@
 package com.aerofs.growl;
 
 import java.awt.image.RenderedImage;
-import java.security.acl.LastOwnerException;
 
 public class Notification
 {

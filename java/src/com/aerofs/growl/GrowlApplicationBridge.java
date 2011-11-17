@@ -76,27 +76,48 @@ public class GrowlApplicationBridge
     private HashMap<Integer, Notification> _pendingCallbacks = new HashMap<Integer, Notification>();
     private long _timeLastNotif;
 
+    /**
+     * Creates a new bridge to talk to Growl
+     * @param appName the human-readable name of your application. Should not change across versions.
+     */
     public GrowlApplicationBridge(String appName)
     {
         _appName = appName;
     }
 
+    /**
+     * Sets the default icon that will be displayed with notifications that don't have any specific icon.
+     * If you don't set any icon, Growl will try to use the icon from your application bundle.
+     * @param icon
+     */
     public void setDefaultIcon(RenderedImage icon)
     {
         _defaultIcon = icon;
     }
 
+    /**
+     * @return true if the JNI library and the Growl framework were correctly loaded.
+     * If isFrameworkLoaded() is false, calling notify() won't have any effect, and
+     * registerNotifications() will throw an exception indicating the exact cause of the error.
+     */
     public boolean isFrameworkLoaded()
     {
         return (_growl.getLinkerException() == null);
     }
 
+    /**
+     * @return true if Growl is ready and running.
+     */
     public boolean isGrowlRunning()
     {
         return _growl.isGrowlRunning();
     }
 
-    public boolean isBuiltinNotificationEnabled()
+    /**
+     * @return true if Growl is not running and the notifications will be displayed with
+     * Growl's built-in notification system (Mist).
+     */
+    public boolean willUseBuiltinNotifications()
     {
         return _growl.isMistEnabled();
     }
@@ -138,6 +159,10 @@ public class GrowlApplicationBridge
         _growl.register(this, _appName, serializeImage(_defaultIcon), allNotifArr, enabledNotifArr);
     }
 
+    /**
+     * Tries to display the notification using either Growl or Growl's built-in notification system
+     * @param n
+     */
     public void notify(Notification n)
     {
         int clickContext = 0;
@@ -161,6 +186,10 @@ public class GrowlApplicationBridge
         _timeLastNotif = System.currentTimeMillis();
     }
 
+    /**
+     * Frees the memory associated with Growl.
+     * If Growl isn't loaded, it is a no-op.
+     */
     public void release()
     {
         _growl.release();
