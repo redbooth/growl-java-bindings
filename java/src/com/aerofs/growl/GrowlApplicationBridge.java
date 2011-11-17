@@ -8,12 +8,39 @@ import java.util.HashMap;
 
 public class GrowlApplicationBridge
 {
-    // Native methods. They start with an underscore
-    private native boolean _isMistEnabled();
-    private native boolean _isGrowlRunning();
-    private native void _register(String appName, byte[] iconData, String[] allNotifications, String[] enabledNotifications);
-    private native void _release();
-    private native void _notify(String title, String message, String notificationName, byte[] iconData, int priority, boolean isSticky, int clickContext, String groupId);
+    private static final NativeMethods _growl;
+
+    private interface NativeMethods
+    {
+        boolean isMistEnabled();
+        boolean isGrowlRunning();
+        void register(GrowlApplicationBridge bridge, String appName, byte[] iconData, String[] allNotifications, String[] enabledNotifications);
+        void release();
+        void notify(String title, String message, String notificationName, byte[] iconData, int priority, boolean isSticky, int clickContext, String groupId);
+        UnsatisfiedLinkError getLinkerException();
+    }
+
+    private static class GrowlNativeMethods implements NativeMethods
+    {
+        public native boolean isMistEnabled();
+        public native boolean isGrowlRunning();
+        public native void register(GrowlApplicationBridge bridge, String appName, byte[] iconData, String[] allNotifications, String[] enabledNotifications);
+        public native void release();
+        public native void notify(String title, String message, String notificationName, byte[] iconData, int priority, boolean isSticky, int clickContext, String groupId);
+        public UnsatisfiedLinkError getLinkerException() { return null; }
+    }
+
+    private static class DummyNativeMethods implements NativeMethods
+    {
+        private UnsatisfiedLinkError _e;
+        public DummyNativeMethods(UnsatisfiedLinkError e) { _e = e; }
+        public boolean isMistEnabled() { return false; }
+        public boolean isGrowlRunning() { return false; }
+        public void register(GrowlApplicationBridge bridge, String appName, byte[] iconData, String[] allNotifications, String[] enabledNotifications) {}
+        public void release() {}
+        public void notify(String title, String message, String notificationName, byte[] iconData, int priority, boolean isSticky, int clickContext, String groupId) {}
+        public UnsatisfiedLinkError getLinkerException() { return _e; }
+    }
 
     // Callbacks (called by native code)
     void onNotificationClicked(int clickContext)
@@ -33,7 +60,15 @@ public class GrowlApplicationBridge
     }
 
     static {
-        System.loadLibrary("GrowlJavaBridge");
+        NativeMethods methods;
+        try {
+            System.loadLibrary("GrowlJavaBridge");
+            methods = new GrowlNativeMethods();
+        } catch (UnsatisfiedLinkError e) {
+            System.out.println("Failed to load the Growl library (libGrowlJavaBridge.jnilib): " + e);
+            methods = new DummyNativeMethods(e); // save the exception to throw it later on registerNotifications()
+        }
+        _growl = methods;
     }
 
     String _appName;
@@ -51,9 +86,19 @@ public class GrowlApplicationBridge
         _defaultIcon = icon;
     }
 
+    public boolean isFrameworkLoaded()
+    {
+        return (_growl.getLinkerException() == null);
+    }
+
     public boolean isGrowlRunning()
     {
-        return _isGrowlRunning();
+        return _growl.isGrowlRunning();
+    }
+
+    public boolean isBuiltinNotificationEnabled()
+    {
+        return _growl.isMistEnabled();
     }
 
     /**
@@ -64,8 +109,19 @@ public class GrowlApplicationBridge
         return System.currentTimeMillis() - _timeLastNotif;
     }
 
-    public void registerNotifications(NotificationType... types)
+    /**
+     * Register your notifications with Growl
+     * You must call this method once, otherwise the notifications won't be displayed
+     * @param types all the notification types you intend to display
+     * @throws UnsatisfiedLinkError if the JNI library failed to load.
+     * In this case, nothing will happen if you call notify().
+     */
+    public void registerNotifications(NotificationType... types) throws UnsatisfiedLinkError
     {
+        if (!this.isFrameworkLoaded()) {
+            throw _growl.getLinkerException();
+        }
+
         ArrayList<String> allNotifications = new ArrayList<String>();
         ArrayList<String> enabledNotifications = new ArrayList<String>();
 
@@ -79,7 +135,7 @@ public class GrowlApplicationBridge
         String[] allNotifArr = allNotifications.toArray(new String[allNotifications.size()]);
         String[] enabledNotifArr = enabledNotifications.toArray(new String[enabledNotifications.size()]);
 
-        _register(_appName, serializeImage(_defaultIcon), allNotifArr, enabledNotifArr);
+        _growl.register(this, _appName, serializeImage(_defaultIcon), allNotifArr, enabledNotifArr);
     }
 
     public void notify(Notification n)
@@ -101,13 +157,13 @@ public class GrowlApplicationBridge
 
         NotificationType type = n.getType();
         RenderedImage icon = (n.getIcon() != null) ? n.getIcon() : type.getDefaultIcon();
-        _notify(n.getTitle(), n.getMessage(), type.getName(), serializeImage(icon), n.getPriority().getValue(), n.isSticky(), clickContext, n.getGroup());
+        _growl.notify(n.getTitle(), n.getMessage(), type.getName(), serializeImage(icon), n.getPriority().getValue(), n.isSticky(), clickContext, n.getGroup());
         _timeLastNotif = System.currentTimeMillis();
     }
 
     public void release()
     {
-        _release();
+        _growl.release();
     }
 
     // Helper methods

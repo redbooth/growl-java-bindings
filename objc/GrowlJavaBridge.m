@@ -7,18 +7,19 @@ NSString* NSStringFromJString(JNIEnv* env, jstring jstring);
 NSArray* NSArrayFromJStringArray(JNIEnv* env, jobjectArray jarray);
 /////////
 
-JNIEXPORT jboolean JNICALL Java_com_aerofs_growl_GrowlApplicationBridge__1isMistEnabled(JNIEnv* env, jobject obj)
+JNIEXPORT jboolean JNICALL Java_com_aerofs_growl_GrowlApplicationBridge_00024GrowlNativeMethods_isMistEnabled(JNIEnv* env, jobject obj)
 {
     return [GrowlApplicationBridge isMistEnabled];
 }
 
-JNIEXPORT jboolean JNICALL Java_com_aerofs_growl_GrowlApplicationBridge__1isGrowlRunning(JNIEnv* env, jobject obj)
+JNIEXPORT jboolean JNICALL Java_com_aerofs_growl_GrowlApplicationBridge_00024GrowlNativeMethods_isGrowlRunning(JNIEnv* env, jobject obj)
 {    
     return [GrowlApplicationBridge isGrowlRunning];
 }
 
-JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge__1register(JNIEnv* env, 
-                                                                             jobject obj, 
+JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge_00024GrowlNativeMethods_register(JNIEnv* env, 
+                                                                             jobject obj,
+                                                                             jobject bridge,
                                                                              jstring jappName, 
                                                                              jbyteArray jiconData, 
                                                                              jobjectArray jallNotifications, 
@@ -31,10 +32,10 @@ JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge__1register(J
     
     JavaVM* jvm;
     (*env)->GetJavaVM(env, &jvm);
-    jclass cls = (*env)->GetObjectClass(env, obj);
+    jclass cls = (*env)->GetObjectClass(env, bridge);
 
     delegate.jvm = jvm;
-    delegate.javaDelegate = (*env)->NewGlobalRef(env, obj);
+    delegate.javaDelegate = (*env)->NewGlobalRef(env, bridge);
     delegate.onNotificationClicked = (*env)->GetMethodID(env, cls, "onNotificationClicked", "(I)V");
     delegate.onNotificationDismissed = (*env)->GetMethodID(env, cls, "onNotificationDismissed", "(I)V");
     delegate.applicationNameForGrowl = NSStringFromJString(env, jappName);
@@ -45,7 +46,7 @@ JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge__1register(J
     // TODO: Must have an autorelease pool ?
 }
 
-JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge__1notify(JNIEnv* env, 
+JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge_00024GrowlNativeMethods_notify(JNIEnv* env, 
                                                                    jobject obj, 
                                                                    jstring jtitle, 
                                                                    jstring jdescription, 
@@ -69,7 +70,7 @@ JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge__1notify(JNI
                                  identifier:NSStringFromJString(env, jidentifier)];
 }
 
-JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge__1release(JNIEnv* env, jobject obj)
+JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge_00024GrowlNativeMethods_release(JNIEnv* env, jobject obj)
 {
     GrowlJavaDelegate* delegate = (GrowlJavaDelegate*) [GrowlApplicationBridge growlDelegate];   
     (*env)->DeleteGlobalRef(env, delegate.javaDelegate);
