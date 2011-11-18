@@ -1,5 +1,5 @@
 bin/**
 java/bin
 xcuserdata
-workspace.xml
+java/.idea/workspace.xml
 java/.idea/misc.xml
