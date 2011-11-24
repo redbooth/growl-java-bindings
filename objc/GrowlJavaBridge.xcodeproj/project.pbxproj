@@ -24,6 +24,7 @@
 			dstPath = "$(SRCROOT)/../bin";
 			dstSubfolderSpec = 0;
 			files = (
+				16C440A01471E82D001F8832 /* Growl.framework in Frameworks */,
 				16BFEBFE14749035009122F6 /* libGrowlJavaBridge.jnilib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
