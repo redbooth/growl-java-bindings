@@ -51,6 +51,7 @@ JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge_00024GrowlNa
 {
     assert([GrowlApplicationBridge growlDelegate] == nil); // Assert that we don't register twice
     
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     GrowlJavaDelegate* delegate = [[GrowlJavaDelegate alloc] initWithAllNotifications:NSArrayFromJStringArray(env, jallNotifications) 
                                                      defaultNotifications:NSArrayFromJStringArray(env, jenabledNotifications)];
     
@@ -66,8 +67,7 @@ JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge_00024GrowlNa
     delegate.applicationIconDataForGrowl = NSDataFromJByteArray(env, jiconData);
     
     [GrowlApplicationBridge setGrowlDelegate: delegate];
-    
-    // TODO: Must have an autorelease pool ?
+    [pool drain];
 }
 
 JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge_00024GrowlNativeMethods_notify(JNIEnv* env, 
@@ -81,8 +81,7 @@ JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge_00024GrowlNa
                                                                    jint jclickContext, 
                                                                    jstring jidentifier)
 {
-      
-    NSLog(@"IDENTIFIER: %@", NSStringFromJString(env, jidentifier));
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     
     [GrowlApplicationBridge notifyWithTitle:NSStringFromJString(env, jtitle) 
                                 description:NSStringFromJString(env, jdescription) 
@@ -92,6 +91,7 @@ JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge_00024GrowlNa
                                    isSticky:jisSticky 
                                clickContext: [NSNumber numberWithInt:jclickContext] 
                                  identifier:NSStringFromJString(env, jidentifier)];
+    [pool drain];
 }
 
 JNIEXPORT void JNICALL Java_com_aerofs_growl_GrowlApplicationBridge_00024GrowlNativeMethods_release(JNIEnv* env, jobject obj)
