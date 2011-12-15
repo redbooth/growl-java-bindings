@@ -42,9 +42,9 @@ Here's some sample code to get you started:
     final NotificationType defaultNotif = new NotificationType("MyApp Notifications");
 
     try {
-        _growl.registerNotifications(defaultNotif);
+        growl.registerNotifications(defaultNotif);
     } catch (UnsatisfiedLinkError e) {
-        l.warn("Failed to load the Growl library: " + e);
+        System.out.println("Failed to load the Growl library: " + e);
     }
 
     // Step 2. Start sending notifications.
@@ -69,7 +69,7 @@ Here's some sample code to get you started:
 Contributing & Contact Information
 ----------------------------------
 
-Pull request are welcome! If you fixed a bug or want to suggest a new feature, feel free to send a pull request. 
+Pull requests are welcome! If you fixed a bug or want to suggest a new feature, feel free to send a pull request.
 
 For any other information, you can get in touch at support@aerofs.com
 
