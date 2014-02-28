@@ -24,7 +24,7 @@
 
 package com.aerofs.growl;
 
-import java.awt.image.RenderedImage;
+import java.io.File;
 
 public class Notification
 {
@@ -44,7 +44,7 @@ public class Notification
     private String _title;
     private String _message;
     private String _groupId;
-    private RenderedImage _icon;
+    private File _icon;
     private Priority _priority;
     private boolean _isSticky;
     private Runnable _clickedCallback;
@@ -61,7 +61,7 @@ public class Notification
     String getTitle()               { return _title; }
     String getMessage()             { return _message; }
     String getGroup()               { return _groupId; }
-    RenderedImage getIcon()         { return _icon; }
+    File getIcon()    { return _icon; }
     Priority getPriority()          { return _priority; }
     boolean isSticky()              { return _isSticky; }
     Runnable getClickedCallback()   { return _clickedCallback; }
@@ -71,7 +71,7 @@ public class Notification
     public Notification setTitle(String title)           { _title = title;         return this; }
     public Notification setMessage(String message)       { _message = message;     return this; }
     public Notification setGroup(String groupId)         { _groupId = groupId;     return this; }
-    public Notification setIcon(RenderedImage icon)      { _icon = icon;           return this; }
+    public Notification setIcon(File icon)               { _icon = icon;           return this; }
     public Notification setPriority(Priority priority)   { _priority = priority;   return this; }
     public Notification setSticky(boolean sticky)        { _isSticky = sticky;     return this; }
     public Notification setClickedCallback(Runnable r)   { _clickedCallback = r;   return this; }

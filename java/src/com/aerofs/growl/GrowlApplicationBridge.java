@@ -24,9 +24,8 @@
 
 package com.aerofs.growl;
 
-import javax.imageio.ImageIO;
-import java.awt.image.RenderedImage;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -96,7 +95,7 @@ public class GrowlApplicationBridge
     }
 
     String _appName;
-    RenderedImage _defaultIcon;
+    File _defaultIcon;
     private HashMap<Integer, Notification> _pendingCallbacks = new HashMap<Integer, Notification>();
     private long _timeLastNotif;
 
@@ -112,9 +111,9 @@ public class GrowlApplicationBridge
     /**
      * Sets the default icon that will be displayed with notifications that don't have any specific icon.
      * If you don't set any icon, Growl will try to use the icon from your application bundle.
-     * @param icon
+     * @param icon png file of the icon to display
      */
-    public void setDefaultIcon(RenderedImage icon)
+    public void setDefaultIcon(File icon)
     {
         _defaultIcon = icon;
     }
@@ -180,7 +179,7 @@ public class GrowlApplicationBridge
         String[] allNotifArr = allNotifications.toArray(new String[allNotifications.size()]);
         String[] enabledNotifArr = enabledNotifications.toArray(new String[enabledNotifications.size()]);
 
-        _growl.register(this, _appName, serializeImage(_defaultIcon), allNotifArr, enabledNotifArr);
+        _growl.register(this, _appName, readFile(_defaultIcon), allNotifArr, enabledNotifArr);
     }
 
     /**
@@ -205,8 +204,8 @@ public class GrowlApplicationBridge
         }
 
         NotificationType type = n.getType();
-        RenderedImage icon = (n.getIcon() != null) ? n.getIcon() : type.getDefaultIcon();
-        _growl.notify(n.getTitle(), n.getMessage(), type.getName(), serializeImage(icon), n.getPriority().getValue(), n.isSticky(), clickContext, n.getGroup());
+        File icon = (n.getIcon() != null) ? n.getIcon() : type.getDefaultIcon();
+        _growl.notify(n.getTitle(), n.getMessage(), type.getName(), readFile(icon), n.getPriority().getValue(), n.isSticky(), clickContext, n.getGroup());
         _timeLastNotif = System.currentTimeMillis();
     }
 
@@ -221,20 +220,24 @@ public class GrowlApplicationBridge
 
     // Helper methods
 
-    private byte[] serializeImage(RenderedImage image)
+    /**
+     * Simple method to read a file to a byte array
+     * There is a race condition if the file length changes while the file is being read, but that should be ok
+     */
+    private byte[] readFile(File file)
     {
-        if (image == null) {
+        if (file == null) {
             return null;
         }
 
         try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(image, "png", baos);
-            return baos.toByteArray();
+            RandomAccessFile f = new RandomAccessFile(file, "r");
+            byte[] data = new byte[(int) f.length()];
+            f.readFully(data);
+            return data;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
-
 }

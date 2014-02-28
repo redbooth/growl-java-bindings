@@ -24,13 +24,13 @@
 
 package com.aerofs.growl;
 
-import java.awt.image.RenderedImage;
+import java.io.File;
 
 public class NotificationType
 {
     private String _name;
     private boolean _disabled;
-    private RenderedImage _defaultIcon;
+    private File _defaultIcon;
 
     /**
      * Create a new type of notification
@@ -50,9 +50,9 @@ public class NotificationType
     // Getters
     String getName()               { return _name; }
     boolean isDisabledByDefault()  { return _disabled; }
-    RenderedImage getDefaultIcon() { return  _defaultIcon; }
+    File getDefaultIcon()         { return  _defaultIcon; }
 
     // Setters
     public void setDisabledByDefault(boolean disabled) { _disabled = disabled; }
-    public void setDefaultIcon(RenderedImage icon)     { _defaultIcon = icon; }
+    public void setDefaultIcon(File icon)     { _defaultIcon = icon; }
 }
